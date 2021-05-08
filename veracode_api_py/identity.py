@@ -86,10 +86,22 @@ class Users():
       payload = json.dumps(user_def)
       return APIHelper()._rest_request('api/authn/v2/users','POST',body=payload)
 
-   def update(self,user_guid,roles):
+   def update_roles(self,user_guid,roles):
+      request_params = {'partial': 'TRUE',"incremental": 'TRUE'}
+      uri = "api/authn/v2/users/{}".format(user_guid)
+
+      rolelist = []
+      for role in roles:
+            rolelist.append({"role_name": role})
+
+      payload = json.dumps({"roles": rolelist})
+      return APIHelper()._rest_request(uri,"PUT",request_params,body=payload)
+
+   def update(self,user_guid,changes):
       request_params = {'partial':'TRUE',"incremental": 'TRUE'}
       uri = "api/authn/v2/users/{}".format(user_guid)
-      return APIHelper()._rest_request(uri,"PUT",request_params,roles)  
+      payload = json.dumps(changes)
+      return APIHelper()._rest_request(uri,"PUT",request_params,body=payload)
 
    def disable(self,user_guid):
       request_params = {'partial':'TRUE'}

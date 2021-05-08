@@ -188,8 +188,11 @@ class VeracodeAPI:
     def create_user (self,email,firstname,lastname,username=None,type="HUMAN",roles=[],teams=[]):
         return Users().create(email,firstname,lastname,username,type,roles,teams)
 
-    def update_user (self,user_guid,roles):
-        return Users().update(user_guid,roles)
+    def update_user_roles (self,user_guid,roles):
+        return Users().update_roles(user_guid,roles)
+
+    def update_user (self,user_guid,changes):
+        return Users().update(user_guid,changes)
 
     def disable_user (self,user_guid):
         return Users().disable(user_guid)
